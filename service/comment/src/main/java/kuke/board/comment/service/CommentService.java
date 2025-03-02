@@ -71,6 +71,8 @@ public class CommentService {
 
     private void delete(Comment comment) {
         commentRepository.delete(comment);
+
+        // 자식댓글 삭제했는데 부모댓글이 삭제되어있는경우 같이 삭제해버린다.
         if (!comment.isRoot()) {
             commentRepository.findById(comment.getParentCommentId())
                     .filter(Comment::getDeleted)
