@@ -29,6 +29,11 @@ public class CommentServiceV2 {
 //    private final OutboxEventPublisher outboxEventPublisher;
     private final ArticleCommentCountRepository articleCommentCountRepository;
 
+    /**
+     * 댓글 생성
+     * @param request
+     * @return
+     */
     @Transactional
     public CommentResponse create(CommentCreateRequestV2 request) {
         CommentV2 parent = findParent(request);
@@ -70,6 +75,11 @@ public class CommentServiceV2 {
         return CommentResponse.from(comment);
     }
 
+    /**
+     * 부모 댓글 찾기
+     * @param request
+     * @return
+     */
     private CommentV2 findParent(CommentCreateRequestV2 request) {
         String parentPath = request.getParentPath();
         if (parentPath == null) {

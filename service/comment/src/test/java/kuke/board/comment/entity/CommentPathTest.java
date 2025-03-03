@@ -32,6 +32,9 @@ class CommentPathTest {
         assertThat(childCommentPath.getPath()).isEqualTo(expectedChildPath);
     }
 
+    /**
+     * 최대 깊이를 초과하면 IllegalStateException 발생
+     */
     @Test
     void createChildCommentPathIfMaxDepthTest() {
         assertThatThrownBy(() ->
@@ -39,6 +42,9 @@ class CommentPathTest {
         ).isInstanceOf(IllegalStateException.class);
     }
 
+    /**
+     * 자식의 경로 최대 깊이를 초과하면 IllegalStateException 발생
+     */
     @Test
     void createChildCommentPathIfChunkOverflowTest() {
         // given
