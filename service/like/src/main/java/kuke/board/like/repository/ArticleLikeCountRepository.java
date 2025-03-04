@@ -13,8 +13,8 @@ import java.util.Optional;
 
 @Repository
 public interface ArticleLikeCountRepository extends JpaRepository<ArticleLikeCount, Long> {
-    // select ... for update
-    @Lock(LockModeType.PESSIMISTIC_WRITE)
+
+    @Lock(LockModeType.PESSIMISTIC_WRITE) // // select ... for update 이 자동으로 실행됨
     Optional<ArticleLikeCount> findLockedByArticleId(Long articleId);
 
 
