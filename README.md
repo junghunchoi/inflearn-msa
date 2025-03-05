@@ -12,24 +12,45 @@
 
 3. 무한 스크롤은 "<=" 연산자를 이용해서 구현이 가능하다.
 
-
 4. 샤드에선 pk를 auto increment 를 사용해도 유일성이 보장되지 않는다.
 또한, 클라이언트에 키를 노출하게 될 경우 보안적인 이슈가 있을 수 있다.
 다만, 너무 큰 문자열을 사용하게 되면 인덱스의 크기가 커지고, 검색 속도가 느려질 수 있다.
 절충안인 snowflake를 사용하자.
 
+5. Common 클래스에선 아래와 같이 정의한다.
+```java
+/**
+ * 유틸성 클래스는 final로 선언하고, 생성자를 private으로 선언하여 인스턴스 생성을 막는다.
+ */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+```
+
 
 ---
 <h1>댓글(comment)</h1>
-무한 depth 댓글
 
-부모의 id를 참조하기 위해선 문자열로 저장해야한다.
+
+1. 부모의 id를 참조하기 위해선 문자열로 저장해야한다. </br>
 예) 123|456|789 이런식으로 저장하고, split을 통해 파싱한다.
 
 문자열로 구분했기에 경로 컬럼이 정렬되어 있고 부모 댓글로 순서대로 자식 댓글도 정렬이 되어있어 해당 부분만 조회하기 때문에
 커버링 인덱스가 사용되어 많은양의 데이터에도 빠르게 조회가 가능하다.
 
 ![img_1.png](img_1.png)
+
+2. @NoArgsConstructor(access = AccessLevel.PROTECTED) 로 엔티티클래스에 생성자 생성을 제한한다.</br>
+-> 팩토리 메소드나 빌더 패턴 등 정해진 방법으로만 객체 생성 가능
+
+
+3. count와 limit, 복합 인덱스가 있다면 인라인 서브쿼리를 통해 효율적으로 카운팅할 수 있다.
+```sql
+                    "select count(*) from (" +
+                    "   select comment_id from comment " +
+                    "   where article_id = :articleId and parent_comment_id = :parentCommentId " +
+                    "   limit :limit" +
+                    ") t"
+```
+
 
 ---
 좋아요를 테이블에서 관리하면 레코드에 락이 잡힐 여지가 크다.
