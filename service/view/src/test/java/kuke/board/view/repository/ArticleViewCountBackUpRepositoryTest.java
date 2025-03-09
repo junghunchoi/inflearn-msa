@@ -28,7 +28,7 @@ class ArticleViewCountBackUpRepositoryTest {
         );
         entityManager.flush();
         entityManager.clear();
-
+        
         // when
         int result1 = articleViewCountBackUpRepository.updateViewCount(1L, 100L);
         int result2 = articleViewCountBackUpRepository.updateViewCount(1L, 300L);

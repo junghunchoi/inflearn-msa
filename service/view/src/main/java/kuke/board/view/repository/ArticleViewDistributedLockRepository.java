@@ -6,6 +6,9 @@ import org.springframework.stereotype.Repository;
 
 import java.time.Duration;
 
+/**
+ * 동일 사용자의 조회수 중복 증가를 방지하기 위한 클래스
+ */
 @Repository
 @RequiredArgsConstructor
 public class ArticleViewDistributedLockRepository {

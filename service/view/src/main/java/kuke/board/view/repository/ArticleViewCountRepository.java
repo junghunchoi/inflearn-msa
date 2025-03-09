@@ -4,11 +4,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Repository;
 
+
+/**
+ * redis는 인터페이스가 아니라 class로 만드나봄
+ */
 @Repository
 @RequiredArgsConstructor
 public class ArticleViewCountRepository {
     private final StringRedisTemplate redisTemplate;
 
+    // redis 에서 키값을 고정으로 쓰기 위해선 String api 를 통해서 값을 설정한 후 삽입함
     // view::article::{article_id}::view_count
     private static final String KEY_FORMAT = "view::article::%s::view_count";
 
