@@ -17,10 +17,10 @@ public class HotArticleEventConsumer {
     private final HotArticleService hotArticleService;
 
     @KafkaListener(topics = {
-            EventType.Topic.KUKE_BOARD_ARTICLE,
-            EventType.Topic.KUKE_BOARD_COMMENT,
-            EventType.Topic.KUKE_BOARD_LIKE,
-            EventType.Topic.KUKE_BOARD_VIEW
+            EventType.Topic.ARTICLE_CREATED,
+            EventType.Topic.COMMENT_CREATED,
+            EventType.Topic.ARTICLE_LIKED,
+            EventType.Topic.ARTICLE_VIEWED
     })
     public void listen(String message, Acknowledgment ack) {
         log.info("[HotArticleEventConsumer.listen] received message={}", message);
