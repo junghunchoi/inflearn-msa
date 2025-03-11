@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class CommentDeletedEventPayload implements EventPayload {
     private Long commentId;
+    private Long articleId;
     private String content;
     private String path;
     private Long writerId;

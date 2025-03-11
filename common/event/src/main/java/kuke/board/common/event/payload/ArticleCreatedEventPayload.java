@@ -19,7 +19,7 @@ public class ArticleCreatedEventPayload implements EventPayload {
     private String content;
     private long boardId;
     private Long writerId;
-    private LocalDateTime localDateTime;
+    private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
     private Long boardArticleCount;
 }

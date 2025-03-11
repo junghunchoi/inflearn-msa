@@ -9,14 +9,14 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @RequiredArgsConstructor
 public enum EventType {
-    ARTICLE_CREATED(ArticleCreatedEventPayload.class, Topic.ARTICLE_CREATED),
-    ARTICLE_UPDATED(ArticleUpdatedEventPayload.class, Topic.ARTICLE_UPDATED),
-    ARTICLE_DELETED(ArticleDeletedEventPayload.class, Topic.ARTICLE_DELETED),
-    COMMENT_CREATED(CommentCreatedEventPayload.class, Topic.COMMENT_CREATED),
-    COMMENT_DELETED(CommentDeletedEventPayload.class, Topic.COMMENT_DELETED),
-    ARTICLE_LIKED(ArticleLikedEventPayload.class, Topic.ARTICLE_LIKED),
-    ARTICLE_UNLIKED(ArticleUnlikedEventPayload.class, Topic.ARTICLE_UNLIKED),
-    ARTICLE_VIEWED(ArticleViewedEventPayload.class, Topic.ARTICLE_VIEWED);
+    ARTICLE_CREATED(ArticleCreatedEventPayload.class, Topic.KUKE_BOARD_ARTICLE),
+    ARTICLE_UPDATED(ArticleUpdatedEventPayload.class, Topic.KUKE_BOARD_ARTICLE),
+    ARTICLE_DELETED(ArticleDeletedEventPayload.class, Topic.KUKE_BOARD_ARTICLE),
+    COMMENT_CREATED(CommentCreatedEventPayload.class, Topic.KUKE_BOARD_COMMENT),
+    COMMENT_DELETED(CommentDeletedEventPayload.class, Topic.KUKE_BOARD_COMMENT),
+    ARTICLE_LIKED(ArticleLikedEventPayload.class, Topic.KUKE_BOARD_LIKE),
+    ARTICLE_UNLIKED(ArticleUnlikedEventPayload.class, Topic.KUKE_BOARD_LIKE),
+    ARTICLE_VIEWED(ArticleViewedEventPayload.class, Topic.KUKE_BOARD_VIEW);
 
     private final Class<? extends EventPayload> payloadClass;
     private final String topic;
@@ -31,13 +31,9 @@ public enum EventType {
     }
 
     public static class Topic {
-        public static final String ARTICLE_CREATED = "article_created";
-        public static final String ARTICLE_UPDATED = "article_updated";
-        public static final String ARTICLE_DELETED = "article_deleted";
-        public static final String COMMENT_CREATED = "comment_created";
-        public static final String COMMENT_DELETED = "comment_deleted";
-        public static final String ARTICLE_LIKED = "article_liked";
-        public static final String ARTICLE_UNLIKED = "article_unliked";
-        public static final String ARTICLE_VIEWED = "article_viewed";
+        public static final String KUKE_BOARD_ARTICLE = "kuke-board-article";
+        public static final String KUKE_BOARD_COMMENT = "kuke-board-comment";
+        public static final String KUKE_BOARD_LIKE = "kuke-board-like";
+        public static final String KUKE_BOARD_VIEW = "kuke-board-view";
     }
 }
