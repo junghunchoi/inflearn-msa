@@ -1,9 +1,9 @@
 package kuke.board.like.service;
 
-//import kuke.board.common.event.EventType;
-//import kuke.board.common.event.payload.ArticleLikedEventPayload;
-//import kuke.board.common.event.payload.ArticleUnlikedEventPayload;
-//import kuke.board.common.outboxmessagerelay.OutboxEventPublisher;
+import kuke.board.common.event.EventType;
+import kuke.board.common.event.payload.ArticleLikedEventPayload;
+import kuke.board.common.event.payload.ArticleUnlikedEventPayload;
+import kuke.board.common.outboxmessagerelay.OutboxEventPublisher;
 import kuke.board.common.snowflake.Snowflake;
 import kuke.board.like.entity.ArticleLike;
 import kuke.board.like.entity.ArticleLikeCount;
@@ -11,6 +11,7 @@ import kuke.board.like.repository.ArticleLikeCountRepository;
 import kuke.board.like.repository.ArticleLikeRepository;
 import kuke.board.like.service.response.ArticleLikeResponse;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.type.EntityType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class ArticleLikeService {
     private final Snowflake snowflake = new Snowflake();
-//    private final OutboxEventPublisher outboxEventPublisher;
+    private final OutboxEventPublisher outboxEventPublisher;
     private final ArticleLikeRepository articleLikeRepository;
     private final ArticleLikeCountRepository articleLikeCountRepository;
 
@@ -56,6 +57,18 @@ public class ArticleLikeService {
                     ArticleLikeCount.init(articleId, 1L)
             );
         }
+
+        outboxEventPublisher.publish(
+            EventType.ARTICLE_LIKED,
+            ArticleLikedEventPayload.builder()
+                .articleLikeId(articleLike.getArticleLikeId())
+                .articleId(articleLike.getArticleId())
+                .userId(articleLike.getUserId())
+                .createdAt(articleLike.getCreatedAt())
+                .articleLikeCount(count(articleLike.getArticleId()))
+                .build(),
+            articleLike.getArticleId()
+        );
     }
 
     /**
@@ -73,7 +86,21 @@ public class ArticleLikeService {
                                  // 3. 좋아요 카운트 감소 (내부적으로 UPDATE 쿼리 실행)
                                  // 이 방식에서는 카운트가 없는 경우에 대한 처리가 없음 (이미 존재한다고 가정)
                                  articleLikeCountRepository.decrease(articleId);
+
+                               outboxEventPublisher.publish(
+                                   EventType.ARTICLE_LIKED,
+                                   ArticleUnlikedEventPayload.builder()
+                                       .articleLikeId(articleLike.getArticleLikeId())
+                                       .articleId(articleLike.getArticleId())
+                                       .userId(articleLike.getUserId())
+                                       .createdAt(articleLike.getCreatedAt())
+                                       .articleLikeCount(count(articleLike.getArticleId()))
+                                       .build(),
+                                   articleLike.getArticleId()
+                               );
                              });
+
+
 
     }
 

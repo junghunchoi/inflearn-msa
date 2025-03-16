@@ -16,7 +16,8 @@ public enum EventType {
     COMMENT_DELETED(CommentDeletedEventPayload.class, Topic.KUKE_BOARD_COMMENT),
     ARTICLE_LIKED(ArticleLikedEventPayload.class, Topic.KUKE_BOARD_LIKE),
     ARTICLE_UNLIKED(ArticleUnlikedEventPayload.class, Topic.KUKE_BOARD_LIKE),
-    ARTICLE_VIEWED(ArticleViewedEventPayload.class, Topic.KUKE_BOARD_VIEW);
+    ARTICLE_VIEWED(ArticleViewedEventPayload.class, Topic.KUKE_BOARD_VIEW)
+    ;
 
     private final Class<? extends EventPayload> payloadClass;
     private final String topic;
@@ -25,7 +26,7 @@ public enum EventType {
         try {
             return valueOf(type);
         } catch (Exception e) {
-            log.error("Unknown event type: {}", type);
+            log.error("[EventType.from] type={}", type, e);
             return null;
         }
     }

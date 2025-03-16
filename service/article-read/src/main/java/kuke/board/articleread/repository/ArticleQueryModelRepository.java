@@ -35,6 +35,8 @@ public class ArticleQueryModelRepository {
         redisTemplate.delete(generateKey(articleId));
     }
 
+    // 아티클 ID로 Redis에서 아티클 쿼리 모델을 조회하는 메소드
+    // 결과가 없을 경우 빈 Optional 반환
     public Optional<ArticleQueryModel> read(Long articleId) {
         return Optional.ofNullable(
                 redisTemplate.opsForValue().get(generateKey(articleId))
@@ -49,6 +51,8 @@ public class ArticleQueryModelRepository {
         return KEY_FORMAT.formatted(articleId);
     }
 
+    // 여러 아티클 ID 목록으로 Redis에서 일괄 조회하는 메소드
+    // 결과를 아티클 ID를 키로 하는 Map으로 변환하여 반환
     public Map<Long, ArticleQueryModel> readAll(List<Long> articleIds) {
         List<String> keyList = articleIds.stream().map(this::generateKey).toList();
         return redisTemplate.opsForValue().multiGet(keyList).stream()
