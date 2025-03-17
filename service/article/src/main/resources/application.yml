@@ -4,8 +4,8 @@ spring:
     name: kuke-board-article-service
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://49.175.22.52:3306/inflearn-msa
-    url: jdbc:mysql://192.168.219.106:3306/inflearn-msa
+    url: jdbc:mysql://49.175.22.52:3306/inflearn-msa
+#    url: jdbc:mysql://192.168.219.106:3306/inflearn-msa
     username: root
     password: 1541
   jpa:

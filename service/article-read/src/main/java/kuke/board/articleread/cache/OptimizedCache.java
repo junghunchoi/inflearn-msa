@@ -17,11 +17,11 @@ public class OptimizedCache {
     public static OptimizedCache of(Object data, Duration ttl) {
         OptimizedCache optimizedCache = new OptimizedCache();
         optimizedCache.data = DataSerializer.serialize(data);
-        optimizedCache.expiredAt = LocalDateTime.now().plus(ttl);
+        optimizedCache.expiredAt = LocalDateTime.now().plus(ttl); // logical ttl 이기 때문에 설정한 시간보다 조금 더 여유있게 시간을 설정한다.
         return optimizedCache;
     }
 
-    @JsonIgnore
+    @JsonIgnore // 필드로 들어갈 수 있기때문에 어노테이션을 단다.
     public boolean isExpired() {
         return LocalDateTime.now().isAfter(expiredAt);
     }
