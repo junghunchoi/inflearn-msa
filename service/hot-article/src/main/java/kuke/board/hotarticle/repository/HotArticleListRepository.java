@@ -58,9 +58,13 @@ public class HotArticleListRepository {
         return KEY_FORMAT.formatted(dateStr);
     }
 
+    /**
+     * Sorted Set(ZSet)에서 데이터를 조회하는 기능
+     * 특정 날짜(dateStr)에 해당하는 인기 게시글 ID 목록을 점수 내림차순으로 모두 가져옴
+     */
     public List<Long> readAll(String dateStr) {
         return redisTemplate.opsForZSet()
-                .reverseRangeWithScores(generateKey(dateStr), 0, -1).stream()
+                .reverseRangeWithScores(generateKey(dateStr), 0, -1).stream() // 점수 기준 내림차순으로 모든 항목(0에서 -1까지) 조회
                 .peek(tuple ->
                         log.info("[HotArticleListRepository.readAll] articleId={}, score={}", tuple.getValue(), tuple.getScore()))
                 .map(ZSetOperations.TypedTuple::getValue)

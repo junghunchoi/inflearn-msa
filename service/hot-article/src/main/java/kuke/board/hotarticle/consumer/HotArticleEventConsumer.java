@@ -10,6 +10,9 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
 
+/**
+ * 카프카에서 발행된 메세지를 수신하는 소비자 클래스
+ */
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -28,6 +31,6 @@ public class HotArticleEventConsumer {
         if (event != null) {
             hotArticleService.handleEvent(event);
         }
-        ack.acknowledge();
+        ack.acknowledge(); // acknowledge를 호출하여 메세지 처리 완료
     }
 }

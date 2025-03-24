@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class OutboxEventPublisher {
+
     private final Snowflake outboxIdsnowflake = new Snowflake();
     private final Snowflake eventIdsnowflake = new Snowflake();
     private final ApplicationEventPublisher applicationEventPublisher;
@@ -21,14 +22,12 @@ public class OutboxEventPublisher {
 
         String jsonPayload = event.toJson();
         System.out.println("JSON 변환 결과: " + jsonPayload);
-        Outbox outbox = Outbox.create(outboxIdsnowflake.nextId(),
-                                      type,
-                                      Event.of(
-                                                   eventIdsnowflake.nextId(), type, payload
-                                           )
-                                           .toJson(),
-                                      shardKey % MessageRelayConstants.SHARD_COUNT
-        );
+        Outbox outbox = Outbox.create(
+            outboxIdsnowflake.nextId(),
+            type,
+            Event.of(eventIdsnowflake.nextId(), type, payload).toJson(),
+            shardKey % MessageRelayConstants.SHARD_COUNT);
+
         applicationEventPublisher.publishEvent(OutboxEvent.of(outbox));
     }
 }

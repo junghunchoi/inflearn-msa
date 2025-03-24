@@ -20,7 +20,7 @@ public class HotArticleScoreUpdater {
     private final ArticleCreatedTimeRepository articleCreatedTimeRepository;
 
     private static final long HOT_ARTICLE_COUNT = 10;
-    private static final Duration HOT_ARTICLE_TTL = Duration.ofDays(10);
+    private static final Duration HOT_ARTICLE_TTL = Duration.ofDays(10); // 인기글 보유기간을 넉넉하게 10일로 셋팅
 
     public void update(Event<EventPayload> event, EventHandler<EventPayload> eventHandler) {
         Long articleId = eventHandler.findArticleId(event);

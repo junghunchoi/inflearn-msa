@@ -24,14 +24,12 @@ import java.util.concurrent.ThreadPoolExecutor;
  * 데이터베이스에 저장된 Outbox 테이블의 이벤트를 Kafka 메시지로 변환하여 전송하는 기능을 제공합니다.
  * 비동기 처리와 스케줄링을 활용하여 안정적인 메시지 전달을 보장합니다.
  */
-@EnableAsync // 비동기 처리 활성화 - Outbox에서 메시지를 발행할 때 비동기로 처리
+@EnableAsync
 @Configuration
-@ComponentScan("kuke.board.common.outboxmessagerelay") // 메시지 릴레이 관련 컴포넌트 스캔 범위 지정
-@EnableScheduling // 전달되지 않은 메시지를 주기적으로 전달하기 위한 스케줄링 기능 활성화
+@ComponentScan("kuke.board.common.outboxmessagerelay")
+@EnableScheduling
 public class MessageRelayConfig {
-    /**
-     * Kafka 서버 주소 설정 (application.properties 또는 application.yml에서 주입)
-     */
+
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
 

@@ -13,6 +13,10 @@ import org.springframework.stereotype.Component;
 public class ArticleCreatedEventHandler implements EventHandler<ArticleCreatedEventPayload>{
     private final ArticleCreatedTimeRepository articleCreatedTimeRepository;
 
+    /**
+     * 게시글 ID와 생성 시간을 추출하여 Redis에 저장하고, 만료 시간을 자정까지로 설정
+     * 새 게시글이 생성되면 이 정보를 캐시에 저장하는 역할
+     */
     @Override
     public void handle(Event<ArticleCreatedEventPayload> event) {
         ArticleCreatedEventPayload payload = event.getPayload();

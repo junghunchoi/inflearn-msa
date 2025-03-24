@@ -20,10 +20,8 @@ import java.util.concurrent.TimeUnit;
 @Component
 @RequiredArgsConstructor
 public class MessageRelayCoordinator {
-    /** Redis와 통신하기 위한 템플릿 */
     private final StringRedisTemplate redisTemplate;
 
-    /** 현재 실행 중인 애플리케이션 이름 (Spring 설정에서 주입) */
     @Value("${spring.application.name}")
     private String applicationName;
 
